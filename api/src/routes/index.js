@@ -4,7 +4,8 @@ const { Router } = require('express');
 
 // ! Importo Rutas para Videogames y Genres
 const videogames = require('./videogamesRouter');
-const genres = require('./GenresRouter');
+const videogamesname = require('./videogamesNameRouter');
+const genres = require('./genresRouter');
 
 const router = Router();
 
@@ -13,7 +14,7 @@ const router = Router();
 
 // ! Creo Rutas para Videogames y Genres
 router.use('/videogames', videogames);
+router.use('/videogamesname', videogamesname);
 router.use('/genres', genres);
-
 
 module.exports = router;

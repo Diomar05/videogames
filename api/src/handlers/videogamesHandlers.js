@@ -1,6 +1,5 @@
 const getAllVideogames = require('../controllers/1_getallVideogames')
 const getIdVideogames = require('../controllers/2_idVideogames');
-const getNameVideogames = require('../controllers/3_nameVideogames');
 const getAddVideogames = require('../controllers/4_addVideogames');
 
 exports.allVideogames = async (req, res) => {
@@ -12,18 +11,10 @@ exports.allVideogames = async (req, res) => {
     }
 };
 
-exports.nameVideogames = (req, res) => {
-    const { name } = req.query;
-    try {
-        const videogameName = name ? getNameVideogames(name) : getAllVideogames();
-        res.status(200).json(videogameName);
-    } catch (error) {
-        res.status(400).json({ error: error.message })
-    }
-};
-
 exports.idVideogames = async (req, res) => {
+
     const { id } = req.params;
+
     const source = isNaN(id) ? "bdd" : "api";
     try {
         const response = await getIdVideogames(id, source)
@@ -33,14 +24,14 @@ exports.idVideogames = async (req, res) => {
     }
 };
 
-
-
 exports.addVideogames = async (req, res) => {
-    const { name, description, plataformas, imagen, fecha, rating } = req.body
+    const { name, descripcion, plataformas, imagen, released, rating, genres } = req.body;  
+    const videogameData = { name, descripcion, plataformas, imagen, released, rating, genres };
+
     try {
-        const response = await getAddVideogames(name, description, plataformas, imagen, fecha, rating)
+        const response = await getAddVideogames(videogameData)
         res.status(200).json(response)
     } catch (error) {
         res.status(400).json({ error: error.message })
-    }
+    }    
 };
